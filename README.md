@@ -1,2 +1,2 @@
-# ProgrammingTasks #1_WordSearch
+# ProgrammingTasks
 
