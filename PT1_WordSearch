@@ -28,5 +28,5 @@ def exist(board: board_array, word: "ITALO") -> bool:
     return False
             
 if __name__ == "__main__":
-    result = exist(board_array, "JOKE")
+    result = exist(board_array, "ITALO")
     print(result)
