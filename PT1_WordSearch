@@ -1,0 +1,32 @@
+# PT1_WordSearch
+# Given a 2D board and a word, find if the word exists in the grid. The wordcan be constructed from letters of sequentially adjacent cell, where “adjacent”cells are those horizontally or vertically neighbouring. Note: The same letter cell may not be used more than once.
+# Board = [['I', 'C', 'D', 'A'], ['T', 'O', 'S', 'N'], ['A', 'L', 'E', 'I']]
+# Words = "ITALO", "DANIEL", "SCIENCE"
+
+board_array = [['I', 'C', 'D', 'A'], ['T', 'O', 'S', 'N'], ['A', 'L', 'E', 'I']]
+
+def search(board, c, r, indx, word) -> bool:
+    if indx == len(word):
+        return True
+    if board[c][r] == word[indx]:
+        return True
+    elif c < 0 or c >= len(board) or r < 0 or r >= len(board[c]):
+        return False
+    else:
+        try:
+            return search(board, c+1, r, indx+1, word) or search(board, c-1, r, indx+1, word) or search(board, c, r+1, indx+1, word) or search(board, c, r-1, indx+1, word)
+        except:
+            return False
+    return False
+               
+
+def exist(board: board_array, word: "ITALO") -> bool:
+    for c in range(len(board)):
+        for r in range(len(board[0])):
+            if board[c][r] == word[0]:
+                return search(board, c, r, 1, word)
+    return False
+            
+if __name__ == "__main__":
+    result = exist(board_array, "JOKE")
+    print(result)
