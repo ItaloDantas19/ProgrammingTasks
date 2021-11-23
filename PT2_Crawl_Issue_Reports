@@ -1,0 +1,27 @@
+import pandas as pd
+import requests
+from bs4 import BeautifulSoup
+
+page = requests.get('https://issues.apache.org/jira/browse/CAMEL-10597')
+soup = BeautifulSoup(page.content, 'html.parser')
+week = soup.find('div', attrs={'class': 'issue-body-content'})
+
+details = [soup.find('div', attrs={'class': 'mod-content'}).get_text()]
+description = [soup.find('div', attrs={'class': 'field-ignore-highlight'}).get_text()]
+people = [soup.find('div', attrs={'class': 'item-details people-details'}).get_text()]
+dates = [soup.find('div', attrs={'id': 'datesmodule'}).get_text()]
+
+print(details)
+print(description)
+print(people)
+print(dates)
+
+issue_report = pd.DataFrame(
+    {
+        'details': details,
+        'description': description,
+        'people': people,
+        'dates': dates,
+     })
+
+print(issue_report)
