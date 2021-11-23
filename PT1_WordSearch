@@ -4,28 +4,118 @@
 # Words = "ITALO", "DANIEL", "SCIENCE"
 
 board_array = [['I', 'C', 'D', 'A'], ['T', 'O', 'S', 'N'], ['A', 'L', 'E', 'I']]
+founded = []
 
-def exist(board: board_array, word: "SCIENCE") -> bool:
-    for c in range(len(board)):
-        for r in range(len(board[0])):
-            if board[c][r] == word[0]:
-                return search(board, c, r, 1, word)
+def visited(r, c) -> bool:
+    if ([r, c] in founded):
+        return True
     return False
 
-def search(board, c, r, indx, word) -> bool:
-    if indx == len(word):
-        return True
-    if board[c][r] == word[indx]:
-        return True
-    elif c < 0 or c >= len(board) or r < 0 or r >= len(board[c]):
+def search(board, r, c, indx, word) -> bool:
+    if(r < 0 or c < 0 or r >= len(board) or c >= len(board[0])):
+        return False
+    if(indx == len(word)-1):
+        if(board[r][c] == word[indx] and not visited(r, c)):
+            return True
         return False
     else:
-        try:
-            return search(board, c+1, r, indx+1, word) or search(board, c-1, r, indx+1, word) or search(board, c, r+1, indx+1, word) or search(board, c, r-1, indx+1, word)
-        except:
-            return False
+        if(board[r][c] == word[indx] and not visited(r, c)):
+            founded.append([r, c])
+            indx += 1
+            return search(board, r+1, c, indx, word) or search(board, r-1, c, indx, word) or search(board, r, c+1, indx, word) or search(board, r, c-1, indx, word)
+        return False
+    
+def exist(board: board_array, word) -> bool:
+    for r in range(len(board)):
+        for c in range(len(board[0])):
+            if board[r][c] == word[0]:
+                founded.append([r, c])
+                if search(board, r+1, c, 1, word) or search(board, r-1, c, 1, word) or search(board, r, c+1, 1, word) or search(board, r, c-1, 1, word):
+                    return True
+                founded.pop()
+                continue
     return False
-               
+            
+if __name__ == "__main__":
+    result = exist(board_array, "ITALO")
+    print(result)
+    
+# RESULT = TRUE
+
+board_array = [['I', 'C', 'D', 'A'], ['T', 'O', 'S', 'N'], ['A', 'L', 'E', 'I']]
+founded = []
+
+def visited(r, c) -> bool:
+    if ([r, c] in founded):
+        return True
+    return False
+
+def search(board, r, c, indx, word) -> bool:
+    if(r < 0 or c < 0 or r >= len(board) or c >= len(board[0])):
+        return False
+    if(indx == len(word)-1):
+        if(board[r][c] == word[indx] and not visited(r, c)):
+            return True
+        return False
+    else:
+        if(board[r][c] == word[indx] and not visited(r, c)):
+            founded.append([r, c])
+            indx += 1
+            return search(board, r+1, c, indx, word) or search(board, r-1, c, indx, word) or search(board, r, c+1, indx, word) or search(board, r, c-1, indx, word)
+        return False
+    
+def exist(board: board_array, word) -> bool:
+    for r in range(len(board)):
+        for c in range(len(board[0])):
+            if board[r][c] == word[0]:
+                founded.append([r, c])
+                if search(board, r+1, c, 1, word) or search(board, r-1, c, 1, word) or search(board, r, c+1, 1, word) or search(board, r, c-1, 1, word):
+                    return True
+                founded.pop()
+                continue
+    return False
+            
+if __name__ == "__main__":
+    result = exist(board_array, "DANIEL")
+    print(result)
+    
+#RESULT = TRUE
+
+board_array = [['I', 'C', 'D', 'A'], ['T', 'O', 'S', 'N'], ['A', 'L', 'E', 'I']]
+founded = []
+
+def visited(r, c) -> bool:
+    if ([r, c] in founded):
+        return True
+    return False
+
+def search(board, r, c, indx, word) -> bool:
+    if(r < 0 or c < 0 or r >= len(board) or c >= len(board[0])):
+        return False
+    if(indx == len(word)-1):
+        if(board[r][c] == word[indx] and not visited(r, c)):
+            return True
+        return False
+    else:
+        if(board[r][c] == word[indx] and not visited(r, c)):
+            founded.append([r, c])
+            indx += 1
+            return search(board, r+1, c, indx, word) or search(board, r-1, c, indx, word) or search(board, r, c+1, indx, word) or search(board, r, c-1, indx, word)
+        return False
+    
+def exist(board: board_array, word) -> bool:
+    for r in range(len(board)):
+        for c in range(len(board[0])):
+            if board[r][c] == word[0]:
+                founded.append([r, c])
+                if search(board, r+1, c, 1, word) or search(board, r-1, c, 1, word) or search(board, r, c+1, 1, word) or search(board, r, c-1, 1, word):
+                    return True
+                founded.pop()
+                continue
+    return False
+            
 if __name__ == "__main__":
     result = exist(board_array, "SCIENCE")
     print(result)
+    
+# RESULT = FALSE
